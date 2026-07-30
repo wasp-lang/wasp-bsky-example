@@ -39,7 +39,9 @@ const clientMetadata: OAuthClientMetadataInput = isPubliclyReachable
       // published under `jwks_uri`, which buys us longer lived sessions.
       client_id: CLIENT_METADATA_URI,
       client_name: "bsky-login",
-      client_uri: config.frontendUrl,
+      // No `client_uri` here: the spec requires it to share a hostname with
+      // `client_id`, and `client_id` has to be served by the server, which in a
+      // deployed Wasp app sits on a different host than the client.
       redirect_uris: [REDIRECT_URI],
       scope: SCOPE,
       grant_types: ["authorization_code", "refresh_token"],

@@ -121,6 +121,8 @@ Once your server is reachable over HTTPS, the loopback exception no longer appli
 
 2. Confirm `GET /auth/bluesky/client-metadata.json` and `GET /auth/bluesky/jwks.json` are publicly reachable. Authorization servers fetch both.
 
+If you add branding to the metadata, note that `client_uri` must share a hostname with `client_id`, which is served by the _server_. Pointing it at your client URL fails the authorization request with `invalid_client_metadata` unless both live on the same host. Authorization servers hide `client_uri`, `client_name`, and `logo_uri` for untrusted clients anyway, so `client_uri` is omitted here.
+
 > [!TIP] `wasp deploy fly launch bsky-login mia` provisions the client, the server, and a Postgres database in one command. See [Fly.io](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/fly.md) or [Railway](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/railway.md), and [Deployment overview](https://wasp.sh/docs/deployment/intro.md) for everything else, including self-hosting.
 
 > [!WARNING] If you run more than one server instance _and_ persist AT Protocol sessions, replace `requestLocalLock` in `src/bluesky/client.ts` with a distributed lock. It is process-local, and concurrent token refreshes across instances can get credentials revoked.
