@@ -4,7 +4,9 @@ A [Wasp](https://wasp.sh) starter with "Log in with Bluesky" wired up as a custo
 
 Built by following Wasp's [Custom OAuth Provider guide](https://wasp.sh/docs/guides/integrations/custom-oauth.md), with the OAuth half swapped out for AT Protocol. See below for why.
 
-> [!NOTE] **New to Wasp?** Wasp is a full-stack React + Node.js + Prisma framework where you describe your app (routes, pages, auth, APIs, jobs) in a single [`main.wasp.ts`](https://wasp.sh/docs/general/spec.md) file and Wasp generates the glue: the client, the server, the database client, and end to end types. The [Introduction](https://wasp.sh/docs.md) is a 5 minute read, and the [Tutorial](https://wasp.sh/docs/tutorial/create.md) builds a full app in about 20 minutes.
+> [!NOTE]
+>
+> **New to Wasp?** Wasp is a full-stack React + Node.js + Prisma framework where you describe your app (routes, pages, auth, APIs, jobs) in a single [`main.wasp.ts`](https://wasp.sh/docs/general/spec.md) file and Wasp generates the glue: the client, the server, the database client, and end to end types. The [Introduction](https://wasp.sh/docs.md) is a 5 minute read, and the [Tutorial](https://wasp.sh/docs/tutorial/create.md) builds a full app in about 20 minutes.
 
 ## What Wasp is doing for you here
 
@@ -19,7 +21,9 @@ The AT Protocol part of this repo is roughly 300 lines in `src/bluesky/`. Everyt
 | Env var loading, validation, and client/server split | [Env variables](https://wasp.sh/docs/project/env-vars.md) | `.env.server`, `.env.client` |
 | A deploy pipeline for two services plus a database | [`wasp deploy`](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/overview.md) | see [Deploying](#deploying) |
 
-> [!TIP] Wasp is not a hosted platform or a lock-in. It generates a normal Node.js server and a normal Vite client into `.wasp/out/`, which you can read at any time.
+> [!TIP]
+>
+> Wasp is not a hosted platform or a lock-in. It generates a normal Node.js server and a normal Vite client into `.wasp/out/`, which you can read at any time.
 
 ## Why this isn't the usual OAuth setup
 
@@ -32,7 +36,9 @@ Bluesky uses the [AT Protocol OAuth profile](https://atproto.com/specs/oauth), n
 
 The custom OAuth guide uses [Arctic](https://v1.arcticjs.dev/), which has no Bluesky provider and cannot express any of the above. This starter uses [`@atproto/oauth-client-node`](https://www.npmjs.com/package/@atproto/oauth-client-node) instead. Everything else from the guide carries over unchanged: the [`api()`](https://wasp.sh/docs/advanced/apis.md) routes, `findAuthIdentity` / `createUser` / `tokenStore` / `getRedirectUriForOneTimeCode`, and the switch to `127.0.0.1`.
 
-> [!NOTE] If you want a provider Wasp already supports, you do not need any of this. [Social auth](https://wasp.sh/docs/auth/social-auth/overview.md) covers Google, GitHub, Keycloak, Slack, Discord, and Microsoft in a few lines of config, with [prebuilt login UI](https://wasp.sh/docs/auth/ui.md) included.
+> [!NOTE]
+>
+> If you want a provider Wasp already supports, you do not need any of this. [Social auth](https://wasp.sh/docs/auth/social-auth/overview.md) covers Google, GitHub, Keycloak, Slack, Discord, and Microsoft in a few lines of config, with [prebuilt login UI](https://wasp.sh/docs/auth/ui.md) included.
 
 ## Quick start
 
@@ -49,11 +55,15 @@ wasp start
 
 Then open **http://127.0.0.1:3000** and enter a Bluesky handle.
 
-> [!IMPORTANT] **Use `127.0.0.1`, not `localhost`.** The AT Protocol loopback exception only accepts `http://127.0.0.1` and `http://[::1]` as redirect URIs. That is why `.env.server` overrides `WASP_SERVER_URL` and `WASP_WEB_CLIENT_URL` away from Wasp's `localhost` defaults. The port number does not matter, it is ignored when matching loopback redirect URIs, so set `PORT` too if 3001 is taken. See [Env variables](https://wasp.sh/docs/project/env-vars.md) for the full list of what Wasp reads.
+> [!IMPORTANT]
+>
+> **Use `127.0.0.1`, not `localhost`.** The AT Protocol loopback exception only accepts `http://127.0.0.1` and `http://[::1]` as redirect URIs. That is why `.env.server` overrides `WASP_SERVER_URL` and `WASP_WEB_CLIENT_URL` away from Wasp's `localhost` defaults. The port number does not matter, it is ignored when matching loopback redirect URIs, so set `PORT` too if 3001 is taken. See [Env variables](https://wasp.sh/docs/project/env-vars.md) for the full list of what Wasp reads.
 
 No developer dashboard, API key, or app registration is needed for development.
 
-> [!TIP] `wasp compile` type checks the whole app, spec included. Use it instead of running `tsc` directly. Full command list in the [CLI reference](https://wasp.sh/docs/general/cli.md).
+> [!TIP]
+>
+> `wasp compile` type checks the whole app, spec included. Use it instead of running `tsc` directly. Full command list in the [CLI reference](https://wasp.sh/docs/general/cli.md).
 
 ## How it works
 
@@ -123,13 +133,19 @@ Once your server is reachable over HTTPS, the loopback exception no longer appli
 
 If you add branding to the metadata, note that `client_uri` must share a hostname with `client_id`, which is served by the _server_. Pointing it at your client URL fails the authorization request with `invalid_client_metadata` unless both live on the same host. Authorization servers hide `client_uri`, `client_name`, and `logo_uri` for untrusted clients anyway, so `client_uri` is omitted here.
 
-> [!TIP] `wasp deploy fly launch bsky-login mia` provisions the client, the server, and a Postgres database in one command. See [Fly.io](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/fly.md) or [Railway](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/railway.md), and [Deployment overview](https://wasp.sh/docs/deployment/intro.md) for everything else, including self-hosting.
+> [!TIP]
+>
+> `wasp deploy fly launch bsky-login mia` provisions the client, the server, and a Postgres database in one command. See [Fly.io](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/fly.md) or [Railway](https://wasp.sh/docs/deployment/deployment-methods/wasp-deploy/railway.md), and [Deployment overview](https://wasp.sh/docs/deployment/intro.md) for everything else, including self-hosting.
 
-> [!WARNING] If you run more than one server instance _and_ persist AT Protocol sessions, replace `requestLocalLock` in `src/bluesky/client.ts` with a distributed lock. It is process-local, and concurrent token refreshes across instances can get credentials revoked.
+> [!WARNING]
+>
+> If you run more than one server instance _and_ persist AT Protocol sessions, replace `requestLocalLock` in `src/bluesky/client.ts` with a distributed lock. It is process-local, and concurrent token refreshes across instances can get credentials revoked.
 
 ## Gotchas
 
-> [!CAUTION] **`zod` is pinned to v4 in `package.json`.** The `@atproto/*` packages depend on zod 3, which npm hoists to the root and shadows the zod 4 that Wasp's SDK bundles against, crashing the server with `z.url is not a function`. Pinning v4 at the root pushes zod 3 down into nested `node_modules` where the atproto packages still find it. Keep this line if you add more atproto [dependencies](https://wasp.sh/docs/project/dependencies.md).
+> [!CAUTION]
+>
+> **`zod` is pinned to v4 in `package.json`.** The `@atproto/*` packages depend on zod 3, which npm hoists to the root and shadows the zod 4 that Wasp's SDK bundles against, crashing the server with `z.url is not a function`. Pinning v4 at the root pushes zod 3 down into nested `node_modules` where the atproto packages still find it. Keep this line if you add more atproto [dependencies](https://wasp.sh/docs/project/dependencies.md).
 
 **Google is enabled with dummy credentials, on purpose.** Wasp only exports the OAuth helpers these handlers rely on (`tokenStore`, `getRedirectUriForOneTimeCode`) when at least one [built-in OAuth provider](https://wasp.sh/docs/auth/social-auth/overview.md) is configured. The Google route exists but is inert. To hide it entirely, reject it from an [`onBeforeOAuthRedirect`](https://wasp.sh/docs/auth/auth-hooks.md) hook.
 
