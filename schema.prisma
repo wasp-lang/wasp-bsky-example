@@ -8,3 +8,13 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+// Wasp injects the auth-related models and the `auth` relation into this model.
+model User {
+  id          String  @id @default(cuid())
+  // The account's AT Protocol DID, its permanent identifier.
+  did         String  @unique
+  handle      String
+  displayName String?
+  avatarUrl   String?
+}

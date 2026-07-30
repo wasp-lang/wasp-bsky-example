@@ -57,9 +57,38 @@ body {
 .button {
   font-size: 1.2rem;
   font-weight: 700;
+  font-family: inherit;
   text-decoration: none;
   padding: 1.2rem 1.5rem;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.login-input {
+  font-size: 1.2rem;
+  font-family: inherit;
+  padding: 1.2rem 1.5rem;
+  border-radius: 10px;
+  border: 2px solid #f5c842;
+  min-width: 18rem;
+}
+
+.login-input:focus {
+  outline: 2px solid #f5c842;
+  outline-offset: 2px;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
 }
 
 .button-filled {
